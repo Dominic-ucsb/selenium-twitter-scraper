@@ -21,6 +21,7 @@ load_dotenv()
 TWITTER_MAIL = "dominiclim@ucsb.edu"
 TWITTER_USERNAME = "ilychiikawa"
 TWITTER_PASSWORD = os.getenv('TWITTER_PASSWORD')
+HEADLESS = os.getenv('HEADLESS', 'no')
 
 
 # print(TWITTER_USERNAME)
