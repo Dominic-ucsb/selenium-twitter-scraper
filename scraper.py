@@ -46,88 +46,88 @@ keywords = [
    "background checks"
 ]
 
-def scrape_replies(tweet_url, max_replies=100):
-   """Simple reply scraper"""
-   browser_option = FirefoxOptions()
-   browser_option.add_argument("--no-sandbox")
-   if HEADLESS.lower() == 'yes':
-       browser_option.add_argument("--headless")
+# def scrape_replies(tweet_url, max_replies=100):
+#    """Simple reply scraper"""
+#    browser_option = FirefoxOptions()
+#    browser_option.add_argument("--no-sandbox")
+#    if HEADLESS.lower() == 'yes':
+#        browser_option.add_argument("--headless")
    
-   driver = webdriver.Firefox(options=browser_option)
-   replies = []
+#    driver = webdriver.Firefox(options=browser_option)
+#    replies = []
    
-   try:
-       # Quick login
-       driver.get("https://twitter.com/i/flow/login")
-       time.sleep(3)
+#    try:
+#        # Quick login
+#        driver.get("https://twitter.com/i/flow/login")
+#        time.sleep(3)
        
-       # Username
-       username_field = driver.find_element("xpath", "//input[@autocomplete='username']")
-       username_field.send_keys(TWITTER_USERNAME)
-       username_field.send_keys("\n")
-       time.sleep(3)
+#        # Username
+#        username_field = driver.find_element("xpath", "//input[@autocomplete='username']")
+#        username_field.send_keys(TWITTER_USERNAME)
+#        username_field.send_keys("\n")
+#        time.sleep(3)
        
-       # Handle verification
-       try:
-           verification_field = driver.find_element("xpath", "//input[@data-testid='ocfEnterTextTextInput']")
-           verification_field.send_keys(TWITTER_USERNAME.replace('@', ''))
-           verification_field.send_keys("\n")
-           time.sleep(3)
-       except:
-           pass
+#        # Handle verification
+#        try:
+#            verification_field = driver.find_element("xpath", "//input[@data-testid='ocfEnterTextTextInput']")
+#            verification_field.send_keys(TWITTER_USERNAME.replace('@', ''))
+#            verification_field.send_keys("\n")
+#            time.sleep(3)
+#        except:
+#            pass
        
-       # Password
-       password_field = driver.find_element("xpath", "//input[@autocomplete='current-password']")
-       password_field.send_keys(TWITTER_PASSWORD)
-       password_field.send_keys("\n")
-       time.sleep(5)
+#        # Password
+#        password_field = driver.find_element("xpath", "//input[@autocomplete='current-password']")
+#        password_field.send_keys(TWITTER_PASSWORD)
+#        password_field.send_keys("\n")
+#        time.sleep(5)
        
-       # Go to tweet
-       driver.get(tweet_url)
-       time.sleep(5)
+#        # Go to tweet
+#        driver.get(tweet_url)
+#        time.sleep(5)
        
-       # Scroll and collect replies
-       for _ in range(10):  # 10 scrolls max
-           reply_elements = driver.find_elements(By.XPATH, '//article[@data-testid="tweet"]')[1:]  # Skip main tweet
+#        # Scroll and collect replies
+#        for _ in range(10):  # 10 scrolls max
+#            reply_elements = driver.find_elements(By.XPATH, '//article[@data-testid="tweet"]')[1:]  # Skip main tweet
            
-           for element in reply_elements:
-               try:
-                   # Get reply text
-                   content_element = element.find_element(By.CSS_SELECTOR, '[data-testid="tweetText"]')
-                   content = content_element.text
+#            for element in reply_elements:
+#                try:
+#                    # Get reply text
+#                    content_element = element.find_element(By.CSS_SELECTOR, '[data-testid="tweetText"]')
+#                    content = content_element.text
                    
-                   # Get user
-                   user_element = element.find_element(By.CSS_SELECTOR, '[data-testid="User-Name"] span')
-                   user = user_element.text
+#                    # Get user
+#                    user_element = element.find_element(By.CSS_SELECTOR, '[data-testid="User-Name"] span')
+#                    user = user_element.text
                    
-                   reply_data = {
-                       'user': user,
-                       'content': content,
-                       'parent_tweet_url': tweet_url
-                   }
+#                    reply_data = {
+#                        'user': user,
+#                        'content': content,
+#                        'parent_tweet_url': tweet_url
+#                    }
                    
-                   if reply_data not in replies and content:
-                       replies.append(reply_data)
-                       if len(replies) >= max_replies:
-                           break
+#                    if reply_data not in replies and content:
+#                        replies.append(reply_data)
+#                        if len(replies) >= max_replies:
+#                            break
                            
-               except:
-                   continue
+#                except:
+#                    continue
            
-           if len(replies) >= max_replies:
-               break
+#            if len(replies) >= max_replies:
+#                break
                
-           # Scroll down
-           driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-           time.sleep(2)
+#            # Scroll down
+#            driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+#            time.sleep(2)
    
-   except Exception as e:
-       print(f"Reply scraping error: {e}")
+#    except Exception as e:
+#        print(f"Reply scraping error: {e}")
    
-   finally:
-       driver.quit()
+#    finally:
+#        driver.quit()
    
-   return replies
+#    return replies
 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
@@ -171,8 +171,8 @@ for keyword in keywords:
            tweet_url = tweet[13]  # Tweet link is at index 13
            if tweet_url:
                print(f"💬 Getting replies for tweet {i+1}/10...")
-               replies = scrape_replies(tweet_url, max_replies=50)
-               all_replies.extend(replies)
+            #    replies = scrape_replies(tweet_url, max_replies=50)
+            #    all_replies.extend(replies)
                time.sleep(3)
        
        # Save replies
