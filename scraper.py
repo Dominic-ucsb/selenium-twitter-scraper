@@ -156,33 +156,33 @@ for keyword in keywords:
        # Save tweets
        scraper.save_to_csv()
        
-       # Rename tweet file
-       import glob
-       latest_file = max(glob.glob("./tweets/*.csv"), key=os.path.getctime)
-       new_name = f"./tweets/{keyword_safe}_{timestamp}_{len(tweets)}_tweets.csv"
-       os.rename(latest_file, new_name)
-       print(f"✅ Saved {len(tweets)} tweets to {new_name}")
+    #    # Rename tweet file
+    #    import glob
+    #    latest_file = max(glob.glob("./tweets/*.csv"), key=os.path.getctime)
+    #    new_name = f"./tweets/{keyword_safe}_{timestamp}_{len(tweets)}_tweets.csv"
+    #    os.rename(latest_file, new_name)
+    #    print(f"✅ Saved {len(tweets)} tweets to {new_name}")
        
-       # Get replies from top 10 most liked tweets
-       all_replies = []
-       top_tweets = sorted(tweets, key=lambda x: x[7] if x[7] else 0, reverse=True)[:10]  # Sort by likes
+    #    # Get replies from top 10 most liked tweets
+    #    all_replies = []
+    #    top_tweets = sorted(tweets, key=lambda x: x[7] if x[7] else 0, reverse=True)[:10]  # Sort by likes
        
-       for i, tweet in enumerate(top_tweets):
-           tweet_url = tweet[13]  # Tweet link is at index 13
-           if tweet_url:
-               print(f"💬 Getting replies for tweet {i+1}/10...")
-            #    replies = scrape_replies(tweet_url, max_replies=50)
-            #    all_replies.extend(replies)
-               time.sleep(3)
+    #    for i, tweet in enumerate(top_tweets):
+    #        tweet_url = tweet[13]  # Tweet link is at index 13
+    #        if tweet_url:
+    #            print(f"💬 Getting replies for tweet {i+1}/10...")
+    #         #    replies = scrape_replies(tweet_url, max_replies=50)
+    #         #    all_replies.extend(replies)
+    #            time.sleep(3)
        
-       # Save replies
-       if all_replies:
-           replies_file = f"./tweets/{keyword_safe}_{timestamp}_{len(all_replies)}_replies.csv"
-           with open(replies_file, 'w', newline='', encoding='utf-8') as f:
-               writer = csv.DictWriter(f, fieldnames=['user', 'content', 'parent_tweet_url'])
-               writer.writeheader()
-               writer.writerows(all_replies)
-           print(f"✅ Saved {len(all_replies)} replies to {replies_file}")
+    #    # Save replies
+    #    if all_replies:
+    #        replies_file = f"./tweets/{keyword_safe}_{timestamp}_{len(all_replies)}_replies.csv"
+    #        with open(replies_file, 'w', newline='', encoding='utf-8') as f:
+    #            writer = csv.DictWriter(f, fieldnames=['user', 'content', 'parent_tweet_url'])
+    #            writer.writeheader()
+    #            writer.writerows(all_replies)
+    #        print(f"✅ Saved {len(all_replies)} replies to {replies_file}")
    
    scraper.driver.quit()
    time.sleep(5)
